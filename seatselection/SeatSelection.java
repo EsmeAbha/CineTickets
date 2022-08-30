@@ -3,6 +3,9 @@ import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 import javax.swing.plaf.basic.BasicOptionPaneUI.ButtonActionListener;
 
+import movie.Movie;
+import payment.paymentOptionGUI;
+import userprofile.Person;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -18,10 +21,52 @@ public class SeatSelection implements ActionListener {
     JLabel SelectSeatLabel, movieLabel, selectedlLabel, reservedlLabel, availableLabel, Location;
     JTextField Seat;
     static JButton buttons[];
-   SeatSelection(){
-    ImageIcon image1 =new ImageIcon("C:/Users/Shuvo/OneDrive/Desktop/Project/booked.png");
-    ImageIcon image2 =new ImageIcon("C:/Users/Shuvo/OneDrive/Desktop/Project/available.png");
-    ImageIcon image3 =new ImageIcon("C:/Users/Shuvo/OneDrive/Desktop/Project/selected.png");
+    int numberOfselectedSeat;
+    int countSeat=0;
+    int j=0;
+
+
+
+    String timeslotSTR;
+    int timeslot;
+    String selecteddateSTR;
+    int selecteddate;
+    String seatTypeSTR;
+    int seatType;
+    private Person person;
+    private int[][][][] allButtonList;
+    private Movie[] movies;
+    private Movie movie;
+    private int hall;
+    String location;
+    int [] arrayofSeats=new int[10];
+
+
+
+   public SeatSelection(Person person, int[][][][] allButtonList, Movie[] movies, Movie movie, int hall, String timeslotSTR, int timeslot, String selecteddateSTR, int selecteddate, String seatTypeSTR, int seatType, int numberOfselectedSeat2, String location2){
+
+
+    this.timeslotSTR=timeslotSTR;
+    this.timeslot=timeslot;
+     this.selecteddateSTR=selecteddateSTR;
+     this.selecteddate=selecteddate;
+     this.seatTypeSTR=seatTypeSTR;
+     this.seatType=seatType;
+     this.person=person;
+     this.allButtonList=allButtonList;
+     this.movies=movies;
+     this.movie=movie;
+     this.hall=hall;
+     this.numberOfselectedSeat=numberOfselectedSeat2;
+    this.location=location2;
+    System.out.println(timeslotSTR);
+    System.out.println(selecteddateSTR);
+    System.out.println(seatTypeSTR);
+
+
+    ImageIcon image1 =new ImageIcon("images/booked.png");
+    ImageIcon image2 =new ImageIcon("images/available.png");
+    ImageIcon image3 =new ImageIcon("images/selected.png");
 
      previous= new JButton("Previous");
      previous.setBounds(30, 30, 100, 40);
@@ -35,7 +80,7 @@ public class SeatSelection implements ActionListener {
      next.setFocusable(false);
      next.addActionListener(this);
 
-     Location= new JLabel("Hall Location");
+     Location= new JLabel(location);
      Location.setBackground(Color.green);
      Location.setBounds(1600, 0, 300, 80);
      Location.setFont(new Font("Times New Roman", Font.BOLD, 25));
@@ -66,7 +111,7 @@ public class SeatSelection implements ActionListener {
 
      
      frame = new JFrame();
-     frame.setTitle("Hall location");
+     frame.setTitle("Select Seat");
      frame.setSize(1800,1000);
      frame.setMinimumSize(new Dimension(500,650));
      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -105,33 +150,55 @@ public class SeatSelection implements ActionListener {
      panel7.add(availableLabel);
      
 
-     SeatSelection.SeatArrangment();
+     buttons=new JButton[120];
+     for(int i = 0; i < 120; i++) { 
+         buttons[i] = new JButton();
+         buttons[i].setText(i+1+"");
+         buttons[i].setBackground(Color.green);
+         buttons[i].setFocusable(false);
+         basePanel.add(buttons[i], new GridLayout());
+         buttons[i].addActionListener(this);
+ 
+     } 
 
      frame.add(panel1);
      frame.add(panel7);
      frame.setVisible(true);
          
    } 
-   public static void main(String[] args) {
-    new SeatSelection();
-   }
+
 @Override
 public void actionPerformed(ActionEvent e) {
-     
-}
-private static void SeatArrangment(){
-    buttons=new JButton[120];
-    for(int i = 0; i < 120; i++) { 
-        buttons[i] = new JButton();
-        buttons[i].setText(i+1+"");
-        buttons[i].setBackground(Color.white);
-        buttons[i].setFocusable(false);
-        basePanel.add(buttons[i], new GridLayout());
-
-    } 
-  
+    for(int i=0; i<buttons.length;i++){
+        if(e.getSource()==buttons[i]){
+            buttons[i].setBackground(Color.blue);
+            countSeat++;
+        }
+    }
+    if(countSeat==numberOfselectedSeat){
+        for(int i=0; i<buttons.length;i++){
+        buttons[i].setEnabled(false);
+        }
+    }  
     
-
+    if(e.getSource()==previous){
+        frame.setVisible(false);
+        new Selection(person, allButtonList, movies, movie, location, hall);
+    } 
+    if(e.getSource()==next){
+        for(int i=0; i<buttons.length;i++){
+            if(buttons[i].getBackground()==Color.blue){
+                arrayofSeats[j]=Integer.parseInt(buttons[i].getText());
+                j++;
+            }
+        }
+        frame.setVisible(false);
+        new Invoice( person,allButtonList, movies, movie,  hall, timeslotSTR,  timeslot,  selecteddateSTR,  selecteddate,  seatTypeSTR,  seatType,  numberOfselectedSeat,  location, arrayofSeats);
+        for(int a:arrayofSeats)
+        System.out.print(a);
+    }
 }
+
+
 }
 
