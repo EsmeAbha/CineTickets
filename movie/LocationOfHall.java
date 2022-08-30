@@ -3,28 +3,35 @@ import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 import javax.swing.plaf.basic.BasicOptionPaneUI.ButtonActionListener;
 
+import seatselection.Selection;
+import userprofile.Person;
 
 import java.awt.*;
 import java.awt.event.*;
 
 public class LocationOfHall implements ActionListener{
 
-    // int []ArrayOfSelectedSeats=new int[4];
-    // static int [][][] allButtonList= new int[1][50];
 
-    
+    Movie movie;
+    Movie [] movies;
+    Person person;
+    int[][][][] allButtonList=new int[7][3][3][120];
 
-    JButton location1= new JButton();
-    JButton location2=new JButton();
-    JButton location3=new JButton();
+
+    JButton[] location= new JButton[3];
     JFrame frame;
 
     Font myFont = new Font("Times new roman", Font.PLAIN, 25);
-    public LocationOfHall(){
+    public LocationOfHall(Person person, int[][][][] allButtonList, Movie[] movies, Movie movie){
+        this.person=person;
+        this.movie=movie;
+        this.allButtonList=allButtonList;
+        this.movies=movies;
+
         
         String s = "<html>"+"Blockbuster Cinemas<br>Jamuna Future Park, Ka-244, Pragati Avenue, Dhaka 1229        <br></html>";
         String s1= "<html>"+"Star Cineplex<br>13/3 Ka, Level 8, Bashundhara City, Panthapath, Dhaka 1205          <br></html>";
-        String s2= "<html>"+"Star Cineplex - SKS Tower,<br> 7 VIP Rd, Dhaka 1206..................................................................<br></html>";
+        String s2= "<html>"+"Star Cineplex - SKS Tower,<br> 7 VIP Rd, Dhaka 1206<br></html>";
         JLabel label=new JLabel("Select Theatre Location");
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setPreferredSize(new Dimension(450,100));
@@ -32,44 +39,30 @@ public class LocationOfHall implements ActionListener{
         label.setOpaque(true);
         label.setFont(new Font("Times new roman", Font.PLAIN, 50));
 
-        location1.setPreferredSize(new Dimension(450,150));
-        location1.setBackground(new Color(255,255,255));
-        location1.setFocusable(false);
-        location1.setFont(myFont);
-        location1.setIcon(new ImageIcon("C:/Users/Shuvo/OneDrive/Desktop/Project/location-pin (1).png"));
-        location1.setAlignmentX(JButton.LEFT_ALIGNMENT);
-        location1.setText(s);
-        location1.addActionListener(this);
-
-        location2.setPreferredSize(new Dimension(450,150));
-        location2.setBackground(new Color(255,255,255));
-        location2.setFocusable(false);
-        location2.setFont(myFont);
-        location2.setIcon(new ImageIcon("C:/Users/Shuvo/OneDrive/Desktop/Project/location-pin (1).png"));
-        location2.setText(s1);
-        location2.addActionListener(this);
-    
-        location3.setPreferredSize(new Dimension(450,150));
-        location3.setBackground(new Color(255,255,255));
-        location3.setFocusable(false);
-        location3.setFont(myFont);
-        location3.setAlignmentX(JButton.LEFT_ALIGNMENT);
-        location3.setIcon(new ImageIcon("C:/Users/Shuvo/OneDrive/Desktop/Project/location-pin (1).png"));
-        location3.setText(s2+"\t\t\t\t\t\t\t\t\t\t\t\t");
-        location3.addActionListener(this);
-    
-  
         JPanel panel1= new JPanel();
         panel1.setPreferredSize(new Dimension(800,1000));
         panel1.setBackground(new Color(0xC1F4C5));
         panel1.setLayout(new GridLayout(4,1,0,5));
         panel1.setMinimumSize(new DimensionUIResource(800, 1000));
-
         panel1.add(label);
-        panel1.add(location1);
-        panel1.add(location2);
-        panel1.add(location3);
-        
+
+        for(int i=0; i<location.length;i++){
+            location[i]=new JButton();
+            location[i].setPreferredSize(new Dimension(450,150));
+            location[i].setBackground(new Color(255,255,255));
+            location[i].setFocusable(false);
+            location[i].setFont(myFont);
+            location[i].setIcon(new ImageIcon("images/location-pin (1).png"));
+            location[i].setAlignmentX(JButton.LEFT_ALIGNMENT);
+            location[i].addActionListener(this);
+            panel1.add(location[i]);
+
+        }
+
+        location[0].setText(s);
+        location[1].setText(s1);
+        location[2].setText(s2);
+       
     
         frame = new JFrame();
         frame.setTitle("Hall location");
@@ -97,15 +90,15 @@ public class LocationOfHall implements ActionListener{
 
     
 
-    public static void main(String[] args) {
-        new LocationOfHall();
-    }
+
 	@Override
-	public void actionPerformed(ActionEvent e) 
-    {
-       
-       
-   
-    
-}
+	public void actionPerformed(ActionEvent e) {
+        for(int i=0; i<location.length;i++){
+            if(e.getSource()==location[i]){
+                frame.setVisible(false);
+                new Selection(person, allButtonList, movies, movie, location[i].getText(), i);
+            }
+        }
+    }
+
 }

@@ -5,13 +5,24 @@ import java.awt.*;
 
 import javax.swing.*;
 
+import userprofile.Person;
+import userprofile.SignInPage;
+
 public class Home implements ActionListener {
     JButton homeButton, historyButton, TicketButton, Contact, logout;
     JButton[] movieButtons= new JButton[5];
+
     JFrame frame;
     Font font= new Font("Times new roman", Font.BOLD, 25);
 
-    public Home(){
+    Person person;
+	static int [][][][] allButtonList= new int[7][3][3][120];
+    Movie [] movies= new Movie[5];
+
+    public Home(Person person, int [][][][]allButtonList, Movie[] movies){
+        this.person=person;
+        Home.allButtonList=allButtonList;
+        this.movies=movies;
         ImageIcon image1 =new ImageIcon("images/home.png");
 
      homeButton= new JButton("Home");
@@ -101,13 +112,16 @@ public class Home implements ActionListener {
 
      for(int i=0; i<movieButtons.length;i++){
         movieButtons[i]= new JButton();
+        movieButtons[i].setIcon(movies[i].getMediumMoviePhotos());
         movieButtons[i].setBounds(60+275*i+70*i, 430, 294, 430);
         movieButtons[i].setFocusable(false);
         movieButtons[i].addActionListener(this);
+        movieButtons[i].setBackground(Color.black);
+        movieButtons[i].setOpaque(false);
         seattypeLabel.add(movieButtons[i]);
      }
      movieButtons[1].setBounds(60+275+68, 430, 294, 430);
-    movieButtons[2].setBounds(60+275*2+143, 430, 294, 430);
+     movieButtons[2].setBounds(60+275*2+143, 430, 294, 430);
      movieButtons[4].setBounds(60+275*4+285, 430, 294, 430);
 
 
@@ -120,7 +134,7 @@ public class Home implements ActionListener {
 
 
 
-     frame=new JFrame();
+        frame=new JFrame();
         frame.setTitle("Cine Tickets");
 		frame.setSize(1800,1000);
         frame.add(panel1);
@@ -140,12 +154,36 @@ public class Home implements ActionListener {
 
         
     }
-    public static void main(String [] args){
-        new Home();
-    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
+        for(int i=0; i<movieButtons.length;i++){
+            if(e.getSource()==movieButtons[i]){
+                new MovieDetails(person, allButtonList,movies, movies[i]);
+                frame.setVisible(false);
+            }
+        }
+        if(e.getSource()==logout){
+            frame.setVisible(false);
+            new SignInPage(person, allButtonList, movies);
+        }
+        if(e.getSource()==homeButton){
+            frame.setVisible(false);
+            new Home(person, allButtonList, movies);
+        }
+        // if(e.getSource()==historyButton){
+        //     frame.setVisible(false);
+        //     new History(person, allButtonList, movies);
+        // }
+        // if(e.getSource()==Contact){
+        //     frame.setVisible(false);
+        //     new Contact(person, allButtonList, movies);
+        // }
+        // if(e.getSource()==TicketButton){
+        //     frame.setVisible(false);
+        //     new TicketPrice(person, allButtonList, movies);
+        // }
         
     }
+
 }

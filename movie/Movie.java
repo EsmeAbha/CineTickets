@@ -1,101 +1,124 @@
+package movie;
 import java.lang.*;
+
+import javax.swing.ImageIcon;
 public class Movie
 {
-    private String movieName;
-    private int releaseYear;
-    private String duration;
-    private String genre;
-    private String description;
-    private String language;
-    private String casting;
-    private Movie[] movie = new Movie[100];
+    private String MovieName;
+    private String ReleaseYear;
+    private String Duration;
+    private String Genre;
+    private String Description;
+    private String Language;
+    private String Casting;
+    private ImageIcon[] MoviePhotos = new ImageIcon[5];
+    private String MovieId;
     
 
-    public void setmovieName(String movieName){
-        this.movieName=movieName;
+    public void setMovieName(String MovieName){
+        this.MovieName=MovieName;
     }
    
-    public String getmovieName(){
-        return movieName;
+    public String getMovieName(){
+        return MovieName;
+    }
+    public void setReleaseYear(String ReleaseYear){
+        this.ReleaseYear=ReleaseYear;
+    }
+   
+    public String getReleaseYear(){
+        return ReleaseYear;
+    }
+    public void setDuration(String Duration){
+        this.Duration=Duration;
+    }
+   
+    public String getDuration(){
+        return Duration;
+    }
+    public void setGenre(String Genre){
+        this.Genre=Genre;
+    }
+   
+    public String getGenre(){
+        return Genre;
+    }
+    public void setDescription(String Description){
+        this.Description=Description;
+    }
+   
+    public String getDescription(){
+        return Description;
+    }
+    public void setLanguage(String Language){
+        this.Language=Language;
+    }
+   
+    public String getLanguage(){
+        return Language;
+    }
+    public void setCasting(String Casting){
+        this.Casting=Casting;
+    }
+   
+    public String getCasting(){
+        return Casting;
+    }
+    public void setMoviePhotos(ImageIcon[] MoviePhotos){
+        this.MoviePhotos=MoviePhotos;
+    }
+   
+    public ImageIcon getMediumMoviePhotos(){
+        return MoviePhotos[0];
+    }
+    public ImageIcon getPosterMoviePhotos(){
+        return MoviePhotos[1];
+    }
+    public ImageIcon getSmallMoviePhotos(){
+        return MoviePhotos[2];
+    }
+    public void setMovieId(String MovieId){
+        this.MovieId=MovieId;
+    }
+   
+    public String getMovieId(){
+        return MovieId;
     }
 
 
-    public boolean insertMovie(Movie movie){
-        for(int i=0; i<Movies.length; i++){
-            if(Movies[i] == null) {
-                Movies[i] = movie;
-                return true;
-            }
-        }    
-        return false;
-    }
-
-    public boolean removeMovie(Movie movie){
-        for(int i=0; i<Movies.length; i++){
-            if(Movies[i].getmovieName().equalsIgnoreCase(movie.getmovieName())){
-                for(int j=i; j<Movies.length-1; j++) {
-                    Movies[j] = Movies[j+1];
-                }
-            return true;
-            }
-        }  
-        return false;
-    }
-    public Movie searchMovie(String movieName){
-        for(int i=0; i<Movies.length; i++){
-            if(Movies[i] != null){
-                if(Movies[i].getmovieName().equals(movieName)){
-                    System.out.println("Movie Found!");
-                    return Movies[i];
-                }
-            }
-        }
-        return null;
 
 
-    }
-    public void showAllMovies(){
-        for(int i=0; i<Movies.length; i++){
-            if(Movies[i] != null){
-                Movies[i].showdetails();
-            }
-
-        }
-
-    }
-
-
-       
-    
-
-
-    public Movie(String movieName,int releaseYear,String duration,String language,String casting,String description,String genre)
+    public Movie(String MovieName,String ReleaseYear,String Duration,String Language,String Casting,String Description,String Genre, String MovieId, ImageIcon[] MoviePhotos)
     {
-        this.movieName=movieName;
-        this.releaseYear=releaseYear;
-        this.duration=duration;
-        this.description=description;
-        this.genre=genre;
-        this.language=language;
-        this.casting=casting;
+        this.MovieName=MovieName;
+        this.ReleaseYear=ReleaseYear;
+        this.Duration=Duration;
+        this.Language=Language;
+        this.Casting=Casting;
+        this.Description=Description;
+        this.Genre=Genre;
+        this.MovieId=MovieId;
+        this.MoviePhotos=MoviePhotos;
+
     }
+
+
 
 
     public void showDetails()
     {
-        System.out.println("Movie Name : " +movieName);
-        System.out.println("Release Year : " +releaseYear);
-        System.out.println("Movie Duration : " +duration);
-        System.out.println("Movie Language : " +language);
-        System.out.println("Casting : " +casting);
-        System.out.println("Description : " +description);
-        System.out.println("Genre : " +genre);
+        System.out.println("Movie Name : " +MovieName);
+        System.out.println("Release Year : " +ReleaseYear);
+        System.out.println("Movie Duration : " +Duration);
+        System.out.println("Movie Language : " +Language);
+        System.out.println("Casting : " +Casting);
+        System.out.println("Description : " +Description);
+        System.out.println("Genre : " +Genre);
+        System.out.println("ID : " +MovieId);
     }
 
 
 
-public static void main(String[] args)
- {
-   
- }
+
+
 }
