@@ -1,26 +1,22 @@
 package payment;
-import trainsearch.*;
+
 import javax.swing.*;
 import userprofile.*;
 import javax.swing.plaf.DimensionUIResource;
 import javax.swing.plaf.basic.BasicOptionPaneUI.ButtonActionListener;
+
+import movie.Movie;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CardPaymentGUI implements ActionListener {
-    Person person;
 
-    int ns;
     static int indexOfDate;
     static int indexOfSeatType;
     JFrame frame;
-    int []ArrayOfSelectedSeats=new int[4];
-    static int [][][] allButtonList= new int[7][3][120];
     JTextField cvvField, mobileNumber, nidField, expireField, accNumField, accHolderNameField;
-
-
-
     JButton buttonPay= new JButton("Pay");
     JButton buttonBack=new JButton("Other Payment Method");
     Font myFont = new Font("BankGothic Md BT", Font.PLAIN, 15);
@@ -40,13 +36,43 @@ public class CardPaymentGUI implements ActionListener {
     new CardPayment("Eman Hasnat",	"3752587545875287",	"324",	"2026/03",	1000),
     new CardPayment("1",	"1",	"1",	"1",	1000)};
 
-    public CardPaymentGUI(Person p,  int n, int[] arrayOfSelectedSeats, int[][][] allButtonList2, int indexOfDate, int indexOfSeatType){
-        person=p;
-        ns=n;
-        CardPaymentGUI.indexOfDate=indexOfDate;
-        CardPaymentGUI.indexOfSeatType=indexOfSeatType;
-        ArrayOfSelectedSeats=arrayOfSelectedSeats;
-        CardPaymentGUI.allButtonList=allButtonList2;
+
+    Person person;
+    int numberOfselectedSeat;
+    String timeslotSTR;
+    int timeslot;
+    String selecteddateSTR;
+    int selecteddate;
+    String seatTypeSTR;
+    int seatType;
+    private int[][][][] allButtonList= new int[7][3][3][120];
+    private Movie[] movies;
+    private Movie movie;
+    private int hall;
+    String location;
+    int [] arrayofSeats=new int[numberOfselectedSeat];
+
+    String s;
+    double amount;
+
+    CardPaymentGUI(Person person2, int[][][][] allButtonList2, Movie[] movies, Movie movie, int hall, String timeslotSTR, int timeslot, String selecteddateSTR, int selecteddate, String seatTypeSTR, int seatType, int numberOfselectedSeat, String location, int[] arrayofSeats, String s, double amount){
+
+    this.timeslotSTR=timeslotSTR;
+    this.timeslot=timeslot;
+     this.selecteddateSTR=selecteddateSTR;
+     this.selecteddate=selecteddate;
+     this.seatTypeSTR=seatTypeSTR;
+     this.seatType=seatType;
+     this.person=person;
+     this.allButtonList=allButtonList;
+     this.movies=movies;
+     this.movie=movie;
+     this.hall=hall;
+     this.numberOfselectedSeat=numberOfselectedSeat;
+    this.location=location;
+    this.arrayofSeats=arrayofSeats;
+    this.s=s;
+    this.amount=amount;
 
 
         buttonPay.setBounds(125,405, 250, 30);
@@ -172,10 +198,10 @@ public class CardPaymentGUI implements ActionListener {
                                                     if(cvv.equals(cardlist[i].getCardCVV())){
                                                             if( expireDate.equals(cardlist[i].getCardValidThrough()))
                                                                 {
-                                                                    if(cardlist[i].deductBalance(ns*100)){
+                                                                    if(cardlist[i].deductBalance(amount)){
                                                                     frame.setVisible(false);
-                                                                    new TemproraryPage(person,ns, ArrayOfSelectedSeats, allButtonList, indexOfDate, indexOfSeatType);
-                                                                    }else{
+                                                                    new TicketConfirm(person,  allButtonList,  movies,  movie,  hall,  timeslotSTR,  timeslot,  selecteddateSTR,  selecteddate,  seatTypeSTR,  seatType,  numberOfselectedSeat,  location,  arrayofSeats, s, amount);
+                                                                }else{
                                                                         JOptionPane.showMessageDialog(null, "Insufficient Balance!");
                                                                         
                                                                     }
@@ -192,7 +218,7 @@ public class CardPaymentGUI implements ActionListener {
 
         if(e.getSource()==buttonBack){
             frame.setVisible(false);
-            new paymentOptionGUI(person, ns, ArrayOfSelectedSeats, allButtonList, indexOfDate, indexOfSeatType);
+            new paymentOptionGUI( person,  allButtonList,  movies,  movie,  hall,  timeslotSTR,  timeslot,  selecteddateSTR,  selecteddate,  seatTypeSTR,  seatType,  numberOfselectedSeat,  location,  arrayofSeats, s, amount);
         }
     }
 }

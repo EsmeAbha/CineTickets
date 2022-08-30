@@ -4,16 +4,14 @@ import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 import javax.swing.plaf.basic.BasicOptionPaneUI.ButtonActionListener;
 
+import movie.Movie;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class BkashPaymentGUI implements ActionListener {
-    Person person;
-    int []ArrayOfSelectedSeats=new int[10];
-    static int [][][] allButtonList= new int[7][3][120];
-    int ns;
+
     JTextField mobileNumber, pinField;
 
     JFrame frame;
@@ -37,11 +35,42 @@ public class BkashPaymentGUI implements ActionListener {
         new MobileBankingPayment("01864464668","66164",500),
         new MobileBankingPayment("01644946464","64646",500)};
 
-    public BkashPaymentGUI(Person p,int ns, int[] arrayOfSelectedSeats, int[][][] allButtonList2){
-        this.ns=ns;
-        person=p;
-        ArrayOfSelectedSeats=arrayOfSelectedSeats;
-        BkashPaymentGUI.allButtonList=allButtonList2;
+        Person person;
+        int numberOfselectedSeat;
+        String timeslotSTR;
+        int timeslot;
+        String selecteddateSTR;
+        int selecteddate;
+        String seatTypeSTR;
+        int seatType;
+        private int[][][][] allButtonList= new int[7][3][3][120];
+        private Movie[] movies;
+        private Movie movie;
+        private int hall;
+        String location;
+        int [] arrayofSeats=new int[numberOfselectedSeat];
+    
+        String s="";
+        double amount;
+
+    public BkashPaymentGUI(Person person2, int[][][][] allButtonList2, Movie[] movies, Movie movie, int hall, String timeslotSTR, int timeslot, String selecteddateSTR, int selecteddate, String seatTypeSTR, int seatType, int numberOfselectedSeat, String location, int[] arrayofSeats, String s, double amount){
+
+        this.timeslotSTR=timeslotSTR;
+        this.timeslot=timeslot;
+         this.selecteddateSTR=selecteddateSTR;
+         this.selecteddate=selecteddate;
+         this.seatTypeSTR=seatTypeSTR;
+         this.seatType=seatType;
+         this.person=person;
+         this.allButtonList=allButtonList;
+         this.movies=movies;
+         this.movie=movie;
+         this.hall=hall;
+         this.numberOfselectedSeat=numberOfselectedSeat;
+        this.location=location;
+        this.arrayofSeats=arrayofSeats;
+        this.s=s;
+        this.amount=amount;
 
         buttonPay.setBounds(125,305, 250, 30);
         buttonPay.setBackground(new Color(255,255,255));
@@ -119,9 +148,6 @@ public class BkashPaymentGUI implements ActionListener {
         frame.setVisible(true);
 
     }
-public static void main(String[] args) {
-    //new BkashPaymentGUI(p)
-}
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
@@ -129,7 +155,6 @@ public static void main(String[] args) {
         String pin=pinField.getText();
         String mNumber=mobileNumber.getText();
 
-       // MobileBankingPayment mobileBank= new MobileBankingPayment(mobileNumber, pin);
 
 
         if(e.getSource()==buttonPay)
@@ -138,9 +163,9 @@ public static void main(String[] args) {
 				if(mobileBankList[j]!=null){
 					if( mNumber.equals(mobileBankList[j].getmobileNumber())){
 						if( pin.equals(mobileBankList[j].getpin())){
-                            if(mobileBankList[j].deductBalance(ns*100)){
+                            if(mobileBankList[j].deductBalance(amount)){
                             frame.setVisible(false);
-                            new TicketConfirm(this.person, ArrayOfSelectedSeats, allButtonList);
+                            new TicketConfirm(person,  allButtonList,  movies,  movie,  hall,  timeslotSTR,  timeslot,  selecteddateSTR,  selecteddate,  seatTypeSTR,  seatType,  numberOfselectedSeat,  location,  arrayofSeats, s, amount);
                             }
                             break;
 						}
@@ -157,7 +182,7 @@ public static void main(String[] args) {
 
         if(e.getSource()==buttonBack){
             frame.setVisible(false);
-            new paymentOptionGUI(this.person, this.ns, ArrayOfSelectedSeats, allButtonList);
+            new paymentOptionGUI( person,  allButtonList,  movies,  movie,  hall,  timeslotSTR,  timeslot,  selecteddateSTR,  selecteddate,  seatTypeSTR,  seatType,  numberOfselectedSeat,  location,  arrayofSeats, s, amount);
         } 
     }
 }

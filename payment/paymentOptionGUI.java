@@ -2,34 +2,58 @@ package payment;
 import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 import javax.swing.plaf.basic.BasicOptionPaneUI.ButtonActionListener;
+
+import movie.Movie;
 import userprofile.Person;
 
 import java.awt.*;
 import java.awt.event.*;
 
 public class paymentOptionGUI implements ActionListener{
-    Person person;
-    int ns;
-    static int indexOfDate;
-    static int indexOfSeatType;
-    int []ArrayOfSelectedSeats=new int[4];
-    static int [][][] allButtonList= new int[7][3][120];
-
     JTextField holderName,accNumField,expireField,cvvField;
-
     JButton cardPay= new JButton();
     JButton bkashPay=new JButton();
     JButton rocketPay=new JButton();
     JFrame frame;
-
     Font myFont = new Font("BankGothic Md BT", Font.PLAIN, 35);
-    public paymentOptionGUI(Person person, int ns, int[] arrayOfSelectedSeats, int[][][] allButtonList2){
-        this.person=person;
-        this.ns=ns;
-        paymentOptionGUI.indexOfDate=indexOfDate;
-        paymentOptionGUI.indexOfSeatType=indexOfSeatType;
-        this.ArrayOfSelectedSeats=arrayOfSelectedSeats;
-        paymentOptionGUI.allButtonList=allButtonList2;
+
+
+    Person person;
+    int numberOfselectedSeat;
+    String timeslotSTR;
+    int timeslot;
+    String selecteddateSTR;
+    int selecteddate;
+    String seatTypeSTR;
+    int seatType;
+    private int[][][][] allButtonList= new int[7][3][3][120];
+    private Movie[] movies;
+    private Movie movie;
+    private int hall;
+    String location;
+    int [] arrayofSeats=new int[numberOfselectedSeat];
+
+    String s="";
+    double amount;
+    public paymentOptionGUI(Person person2, int[][][][] allButtonList2, Movie[] movies, Movie movie, int hall, String timeslotSTR, int timeslot, String selecteddateSTR, int selecteddate, String seatTypeSTR, int seatType, int numberOfselectedSeat, String location, int[] arrayofSeats, String s, double amount){
+
+        this.timeslotSTR=timeslotSTR;
+        this.timeslot=timeslot;
+         this.selecteddateSTR=selecteddateSTR;
+         this.selecteddate=selecteddate;
+         this.seatTypeSTR=seatTypeSTR;
+         this.seatType=seatType;
+         this.person=person;
+         this.allButtonList=allButtonList;
+         this.movies=movies;
+         this.movie=movie;
+         this.hall=hall;
+         this.numberOfselectedSeat=numberOfselectedSeat;
+        this.location=location;
+        this.arrayofSeats=arrayofSeats;
+        this.s=s;
+        this.amount=amount;
+
 
 
         JLabel label=new JLabel("Select Payment Option");
@@ -110,19 +134,19 @@ public class paymentOptionGUI implements ActionListener{
         if(e.getSource()==bkashPay)
         {
             frame.setVisible(false);
-            new BkashPaymentGUI(person, ns, ArrayOfSelectedSeats, allButtonList, indexOfDate, indexOfSeatType);
+            new BkashPaymentGUI( person,  allButtonList,  movies,  movie,  hall,  timeslotSTR,  timeslot,  selecteddateSTR,  selecteddate,  seatTypeSTR,  seatType,  numberOfselectedSeat,  location,  arrayofSeats, s, amount);
         }
 
         if(e.getSource()==rocketPay)
         {
             frame.setVisible(false);
-            new BkashPaymentGUI(person,  ns, ArrayOfSelectedSeats, allButtonList, indexOfDate, indexOfSeatType);
+            new BkashPaymentGUI( person,  allButtonList,  movies,  movie,  hall,  timeslotSTR,  timeslot,  selecteddateSTR,  selecteddate,  seatTypeSTR,  seatType,  numberOfselectedSeat,  location,  arrayofSeats, s, amount);
         }
 
         if(e.getSource()==cardPay)
         {
             frame.setVisible(false);
-            new CardPaymentGUI(person, ns, ArrayOfSelectedSeats, allButtonList, indexOfDate, indexOfSeatType);
+            new CardPaymentGUI( person,  allButtonList,  movies,  movie,  hall,  timeslotSTR,  timeslot,  selecteddateSTR,  selecteddate,  seatTypeSTR,  seatType,  numberOfselectedSeat,  location,  arrayofSeats, s, amount);
 
         }
    
