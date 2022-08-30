@@ -8,12 +8,16 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 
+import movie.Movie;
+
 public class SignUpPage implements ActionListener{
 	Person person;
 	
     JFrame frame;
     JLabel namelabel,nameLabel2;
-    static int [][][] allButtonList= new int[7][3][120];
+    static int [][][][] allButtonList= new int[7][3][3][120];
+    Movie[] movies= new Movie[5];
+
 
     static String [][]drawer= new String[500][5];
 	String c="";
@@ -23,13 +27,14 @@ public class SignUpPage implements ActionListener{
     JButton createAccButton, SignInButton;
     JComboBox gendeCombo;
 	
-	public SignUpPage(Person p, int[][][] allButtonList){
+	public SignUpPage(Person p, int[][][][] allButtonList, Movie[] movies){
 		person=p;
         SignUpPage.allButtonList=allButtonList;
+        this.movies=movies;
 
         JLabel namelabel;
-        Font font = new Font("Avenir next lt pro", Font.PLAIN, 23);
-        Font myFont = new Font("MV Boli", Font.PLAIN, 19);
+        Font font = new Font("Avenir next lt pro", Font.PLAIN, 18);
+        Font myFont = new Font("Avenir next lt pro", Font.PLAIN, 18);
     
         namelabel =new JLabel();
         namelabel.setText("Full Name");
@@ -49,7 +54,7 @@ public class SignUpPage implements ActionListener{
         
         JLabel mobileNumberLabel=new JLabel();
         mobileNumberLabel.setText("Mobile Number");
-        mobileNumberLabel.setBounds(25,90,100,30);
+        mobileNumberLabel.setBounds(25,90,150,30);
         mobileNumberLabel.setFont(font);
         mobileNumberLabel.setForeground(Color.white);
     
@@ -62,43 +67,46 @@ public class SignUpPage implements ActionListener{
         mobileNumberTF.setForeground(new Color(0xCFFFDC));
         mobileNumberTF.setOpaque(false);
         mobileNumberTF.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(10,10,10)));
-    
-    
-        JLabel genderLabel =new JLabel();
-        genderLabel.setText("Gender");
-        genderLabel.setBounds(25,160,100,30);
-        genderLabel.setFont(font);
-        genderLabel.setForeground(Color.white);
-    
-    
-         emailField = new JTextField();
+
+        JLabel emailLabel=new JLabel();
+        emailLabel.setText("E-mail");
+        emailLabel.setBounds(25,160,150,30);
+        emailLabel.setFont(font);
+        emailLabel.setForeground(Color.white);
+
+        emailField = new JTextField();
         emailField.setLayout(null);
         emailField.setBounds(25,190, 400, 30);
         emailField.setFont(myFont);
         emailField.setForeground(new Color(0xCFFFDC));
         emailField.setOpaque(false);
         emailField.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(10,10,10)));
+
+        JLabel genderLabel =new JLabel();
+        genderLabel.setText("Gender");
+        genderLabel.setBounds(25,230,100,30);
+        genderLabel.setFont(font);
+        genderLabel.setForeground(Color.white);
+    
+    
        
         String g[]={"Male","Female"};
          gendeCombo=new JComboBox<>(g);
-        gendeCombo.setBounds(25,190, 400, 30);
+        gendeCombo.setBounds(25,260, 400, 30);
         gendeCombo.setBackground(Color.WHITE);
+
     
-     
-    
-      
-        
       
         JLabel passLabel =new JLabel();
         passLabel.setText("Password");
-        passLabel.setBounds(25,230,100,30);
+        passLabel.setBounds(25,300,150,30);
         passLabel.setFont(font);
         passLabel.setForeground(Color.white);
     
     
          pass = new JPasswordField();
         pass.setLayout(null);
-        pass.setBounds(25,260, 400, 30);
+        pass.setBounds(25,330, 400, 30);
         pass.setFont(myFont);
         pass.setForeground(new Color(0xCFFFDC));
         pass.setOpaque(false);
@@ -106,13 +114,13 @@ public class SignUpPage implements ActionListener{
     
         JLabel conPassLabel =new JLabel();
         conPassLabel.setText("Confirm Password");
-        conPassLabel.setBounds(25,295,400,30);
+        conPassLabel.setBounds(25,370,400,30);
         conPassLabel.setFont(font);
         conPassLabel.setForeground(Color.white);
     
          conPassField = new JPasswordField();
        conPassField.setLayout(null);
-       conPassField.setBounds(25,320, 400, 30);
+       conPassField.setBounds(25,400, 400, 30);
        conPassField.setFont(myFont);
        conPassField.setForeground(new Color(0xCFFFDC));
        conPassField.setOpaque(false);
@@ -121,7 +129,7 @@ public class SignUpPage implements ActionListener{
     
         createAccButton =new JButton();
        createAccButton.setText("Create Account");
-       createAccButton.setBounds(150,370,130,30);
+       createAccButton.setBounds(150,450,130,30);
        createAccButton.setBackground(new Color(0x292929));
        createAccButton.setFocusable(false);
        createAccButton.addActionListener(this);
@@ -131,14 +139,14 @@ public class SignUpPage implements ActionListener{
     
        JLabel alreadyJLabel =new JLabel();
         alreadyJLabel.setText("Already have an Account?");
-        alreadyJLabel.setBounds(25,405,400,30);
+        alreadyJLabel.setBounds(25,495,400,30);
         alreadyJLabel.setFont(font);
         alreadyJLabel.setForeground(Color.white);
     
     
         SignInButton =new JButton();
        SignInButton.setText("Sign In");
-       SignInButton.setBounds(200,410,40,20);
+       SignInButton.setBounds(240,500,40,20);
        SignInButton.setAlignmentX(JButton.LEFT_ALIGNMENT);
        SignInButton.setBackground(new Color(250,250,250));
        SignInButton.setFocusable(false);
@@ -157,6 +165,8 @@ public class SignUpPage implements ActionListener{
         panel2.add(pass);
         panel2.add(passLabel);
         panel2.add(mobileNumberLabel);
+        panel2.add(emailLabel);
+        panel2.add(emailField);
         panel2.add(mobileNumberTF);
         panel2.add(genderLabel);
         panel2.add(gendeCombo);
@@ -172,7 +182,7 @@ public class SignUpPage implements ActionListener{
     
        
       JButton imgButton =new JButton();
-      imgButton.setIcon(new ImageIcon(("rsz_11movie.jpg")));
+      imgButton.setIcon(new ImageIcon(("images/rsz_11movie.jpg")));
       imgButton.setText("");
       imgButton.setBounds(0,0,700,600);
       imgButton.setAlignmentX(JButton.LEFT_ALIGNMENT);
@@ -190,10 +200,10 @@ public class SignUpPage implements ActionListener{
       // panel1.setMinimumSize(new Dimension(675,600));
      
       
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         frame.setTitle("Sign Up");
-        frame.setSize(1170,640);
-        frame.setMinimumSize(new Dimension(1169,640));
+        frame.setSize(1180,650);
+        frame.setMinimumSize(new Dimension(1175,650));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     
         ImageIcon image1 =new ImageIcon("movie.png");
@@ -217,7 +227,7 @@ public class SignUpPage implements ActionListener{
 
         if(e.getSource()==SignInButton){
             frame.setVisible(false);
-            new SignInPage(person, allButtonList);
+            new SignInPage(person, allButtonList, movies);
         }
 
         if(e.getSource()==createAccButton){
@@ -243,7 +253,7 @@ public class SignUpPage implements ActionListener{
                             SignInPage.AddNewUser(tempPerson);
                             JOptionPane.showMessageDialog(null, "Congratulations!, Account created successfully.");
                             frame.setVisible(false);
-                            new SignInPage(tempPerson, allButtonList);
+                            new SignInPage(tempPerson, allButtonList, movies);
                             AddToFile(tempPerson);
                         }
                     }else{
@@ -301,7 +311,7 @@ public class SignUpPage implements ActionListener{
 		try{
 		   FileWriter writer= new FileWriter("userprofile/Person.csv");
 		   writer.write(c);
-		   writer.append(a.getFullName()+","+a.getMobileNumber()+","+a.getgenderNumber()+","+a.getEmail()+","+a.getPassword());
+		   writer.append(a.getFullname()+","+a.getMobileNumber()+","+a.getGender()+","+a.getEmail()+","+a.getPassword());
 		   writer.close();
 		}catch(IOException io){
 		   io.printStackTrace();

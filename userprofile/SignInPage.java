@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.awt.*;
 import javax.swing.*;
 
-import home.Home;
+import movie.Home;
+import movie.Movie;
 
 
 
@@ -15,7 +16,8 @@ public class SignInPage implements ActionListener
 {
 	static Person persons[] = new Person [100000];
 	static Person person;
-	static int [][][] allButtonList= new int[7][3][120];
+	static int [][][][] allButtonList= new int[7][3][3][120];
+	Movie[] movies= new Movie[5];
 	
 	JFrame frame;
     JPanel panel;
@@ -33,7 +35,9 @@ public class SignInPage implements ActionListener
 	int countInFrom=0;
 	
 
-    public SignInPage(Person p, int [][][] allButtonList){
+    public SignInPage(Person p, int [][][][] allButtonList,Movie[] movies ){
+		SignInPage.allButtonList=allButtonList;
+		this.movies=movies;
 
 		person=p;
 		SignInPage.allButtonList=allButtonList;
@@ -167,7 +171,7 @@ public class SignInPage implements ActionListener
 			
 			if(counter!=0){
 				frame.setVisible(false);
-				new Home(person, allButtonList);
+				new Home(person, allButtonList, movies);
 			}
 			
 			else
@@ -181,17 +185,17 @@ public class SignInPage implements ActionListener
 		if(e.getSource()==forgotPassword)
 		{
 			frame.setVisible(false);
-			new ResetPasswordGUI(person, allButtonList);
+			new ResetPasswordGUI(person, allButtonList, movies);
 		}
 		
 		if(e.getSource()==buttonSignUp)
 		{
 			frame.setVisible(false);
-			new SignUpPage(person, allButtonList);
+			new SignUpPage(person, allButtonList, movies);
 		}
 	}
 	
-	public static boolean ChangePassword(String mobileN, String nid, String pass)
+	public static boolean ChangePassword(String mobileN, String fullname, String pass)
 	{
 		boolean check=false;
 		
@@ -199,7 +203,7 @@ public class SignInPage implements ActionListener
 		{
 			if(persons[i]!=null)
 			{
-				if( mobileN.equals(persons[i].getMobileNumber())&&nid.equals(persons[i].getNidNumber()))
+				if( mobileN.equals(persons[i].getMobileNumber())&&fullname.equals(persons[i].getFullname()))
 				{
 					persons[i].setPassword(pass);
 					check=true;
@@ -286,9 +290,9 @@ return count;
 		   int j=0;
 		   while((line= reader.readLine())!=null){
 			  String []row= line.split(",");
-			  for(int i=0; i<7;i++){
+			  for(int i=0; i<5;i++){
 				 drawer[j][i]=row[i];
-				 if(i==6)
+				 if(i==4)
 				 c= c+row[i]+"";
 				 else
 				 c= c+row[i]+",";

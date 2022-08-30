@@ -3,13 +3,16 @@ import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 import javax.swing.plaf.basic.BasicOptionPaneUI.ButtonActionListener;
 
+import movie.Movie;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ResetPasswordGUI implements ActionListener {
     Person person;
-    static int [][][] allButtonList= new int[7][3][120];
+    static int [][][][] allButtonList= new int[7][3][3][120];
+    Movie[] movies= new Movie[5];
     JFrame frame;
     JButton buttonConfirm= new JButton("Confirm Change");
     JButton buttonBack= new JButton("Previous");
@@ -18,9 +21,10 @@ public class ResetPasswordGUI implements ActionListener {
     JTextField fullNameField;
     JPasswordField newPass ;
     JPasswordField conPassField;
-    ResetPasswordGUI(Person p, int[][][] allButtonList){
+    ResetPasswordGUI(Person p, int[][][][] allButtonList, Movie[] movies2){
         person=p;
         ResetPasswordGUI.allButtonList=allButtonList;
+        this.movies=movies2;
 
         buttonConfirm.setBounds(125,405, 250, 30);
         buttonConfirm.setBackground(new Color(255,255,255));
@@ -129,17 +133,17 @@ public class ResetPasswordGUI implements ActionListener {
  
         if(e.getSource()==buttonConfirm){
             String mobile=mobileNumber.getText();
-            String nid= fullNameField.getText();
+            String fullname= fullNameField.getText();
             String password= String.valueOf(newPass.getPassword());
 			String conPass = String.valueOf(conPassField.getPassword());
             if(password.equals(conPass)){
-                if((mobile.isEmpty()!=true) && (nid.isEmpty()!=true)){
-                    if(SignInPage.ChangePassword(mobile, nid, password)){
+                if((mobile.isEmpty()!=true) && (fullname.isEmpty()!=true)){
+                    if(SignInPage.ChangePassword(mobile, fullname, password)){
                         JOptionPane.showMessageDialog(null, "Password Changed successfully");
                     }
 
                 frame.setVisible(false);
-                new SignInPage(person, allButtonList);
+                new SignInPage(person, allButtonList, movies);
                 }else{
                     JOptionPane.showMessageDialog(null,  "All fills are required");
                 }
@@ -150,7 +154,7 @@ public class ResetPasswordGUI implements ActionListener {
         if(e.getSource()==buttonBack){
 
             frame.setVisible(false);
-            new SignInPage(person, allButtonList);
+            new SignInPage(person, allButtonList, movies);
 
         }
         
